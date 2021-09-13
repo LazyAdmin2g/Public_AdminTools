@@ -1,0 +1,2 @@
+﻿$perm = Get-User -ResultSize unlimited | where{$_.UserAccountControl -match "AccountDisabled" -and $_.RecipientType -like "UserMailbox" } | select userprincipalname
+$perm | foreach{Get-MailboxPermission -Identity $_.Userprincipalname} | Where-Object{$_.User -notlike "*NT*" -and $_.User -notlike "*admin*" -and $_.User -notlike "*exchange*" -and $_.User -notlike "*delegated*" -and $_.User -notlike "*managed*" } | Out-GridView
